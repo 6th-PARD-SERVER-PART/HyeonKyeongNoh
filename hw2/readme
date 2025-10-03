@@ -1,0 +1,22 @@
+= Dispatcher Servlet
+
+-스프링 프레임워크 핵심 컴포넌트
+-http요청 처리하는 frontController
++) 동작과정
+1. 요청 접수
+2. 핸들러 매핑
+3. 핸들러 어뎁터
+4. 컨트롤러 실행 및 비즈니스 로직 처리
+5. Model과 View 변환
+6. 뷰 resolver
+7. 뷰 렌더링 및 응답
+
+-> 스레드 기반 처리로 여러 개 요청을 한 번에 처리
+-요청별 스레드 생성
+-독립적인 작업 공간
+-스레드 풀로 효율적인 자원 관리
+
++) 보안
+-Authentication으로 사용자 확인(jwt 토큰)
+-Authorization으로 사용자들의 역할을 분리해 접근권한 관리
+-외부 공격 방어(웹 취약점 공격 방어) ; csrf, xss, sql Injection방어 등
