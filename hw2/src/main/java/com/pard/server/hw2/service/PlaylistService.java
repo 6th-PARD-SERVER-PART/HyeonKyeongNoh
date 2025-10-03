@@ -17,6 +17,7 @@ public class PlaylistService {
 
     public void savePlaylist(PlaylistDto playlistDto) {
         Playlist playlist = Playlist.builder()
+                .playlistId(playlistDto.getPlaylistId())
                                 .title(playlistDto.getTitle())
                                         .genre(playlistDto.getGenre())
                                                 .producer(playlistDto.getProducer())
@@ -47,10 +48,10 @@ public class PlaylistService {
                 .build();
     }
 
-    public void updatePlaylist(Long playlistId, PlaylistDto playlistDto){
+    public void updatePlaylist(Long playlistId, String title, PlaylistDto playlistDto){
         Playlist playlist = playlistRepo.findById(playlistId);
 
-        playlist.updateTitle(playlistDto.getTitle());
+        playlist.updateTitle(title);
         playlistRepo.save(playlist);
     }
 
@@ -63,6 +64,7 @@ public class PlaylistService {
 
         playlistRepo.findAll().forEach(playlist -> {
             PlaylistDto playlistDto = PlaylistDto.builder()
+                    .playlistId(playlist.getPlaylistId())
                     .title(playlist.getTitle())
                     .genre(playlist.getGenre())
                     .producer(playlist.getProducer())

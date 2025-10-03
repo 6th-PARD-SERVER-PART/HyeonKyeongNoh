@@ -29,18 +29,17 @@ public class PlaylistController {
     public PlaylistResponseDto findTitleAndProducerAndDuration(@PathVariable Long playlistId){
         return playlistService.findByTitleAndProducerAndDuration(playlistId);
     }
-    //dto를 또 안 만든다(?)
 
-    @PatchMapping("/{playlistId}")
-    public String updateById(@PathVariable Long playlistId,@RequestBody PlaylistDto playlistDto){
-        playlistService.updatePlaylist(playlistId,playlistDto);
-        return "수정완료~";
+    @PatchMapping("/{playlistId}/{title}")
+    public String updateById(@PathVariable Long playlistId,@PathVariable String title,@RequestBody PlaylistDto playlistDto){
+        playlistService.updatePlaylist(playlistId,title,playlistDto);
+        return "succesfully updated";
     }
 
-    @DeleteMapping("{studentId}")
+    @DeleteMapping("{playlistId}")
     public String deleteById(@PathVariable Long playlistId){
         playlistService.deleteById(playlistId);
-        return "삭제완료~";
+        return "succesfully deleted";
     }
 
     @GetMapping("")
