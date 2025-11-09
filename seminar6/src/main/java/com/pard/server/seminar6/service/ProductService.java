@@ -62,16 +62,18 @@ public class ProductService {
     }
 
     @Transactional
-    public void fixProduct(Product req) {
+    public Integer fixProduct(Product req) {
         Product product= productRepo.findByNameAndColor(req.getName(),req.getColor());
         if(product==null) {
             product= productRepo.getProductById(req.getId());
             product.updateProduct(req);
             productRepo.save(product);
+            return 0;
         }
         else{
             product.setCount(product.getCount()+req.getCount());
             deleteProduct(req);
+            return 1;
         }
     }
 

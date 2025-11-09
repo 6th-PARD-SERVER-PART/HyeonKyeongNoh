@@ -23,7 +23,7 @@ public class ProductController {
     public ResponseEntity<?> save(@RequestBody ProductReq.ProductInfo req){
         try {
             Integer check = productService.save(req);
-            if (check == 1)return  ResponseEntity.ok("중복값(insert x)");
+            if (check == 1)return  ResponseEntity.ok(409);
             else return ResponseEntity.ok(200);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -46,9 +46,9 @@ public class ProductController {
     @PatchMapping("/update")
     public ResponseEntity<?> updateProduct(@RequestBody Product req){
         try {
-            productService.fixProduct(req);
-            // 성공 시: ResponseEntity에 200 OK 상태로 반환
-            return ResponseEntity.ok(200);
+            Integer check = productService.fixProduct(req);
+            if (check == 1)return  ResponseEntity.ok(409);
+            else return ResponseEntity.ok(200);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(e.getMessage());
@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     @GetMapping("/getColor/{color}")
-    public ResponseEntity<?> getColor(@RequestParam String color){
+    public ResponseEntity<?> getColor(@PathVariable String color){
            try {
             List<Product> products = productService.readColor(color);
             // 성공 시: ResponseEntity에 List를 담아 200 OK 상태로 반환
@@ -80,7 +80,7 @@ public class ProductController {
     }
 
     @GetMapping("getPrdColor/{name}")
-    public ResponseEntity<?> getAllColor(@RequestParam String name){
+    public ResponseEntity<?> getAllColor(@PathVariable String name){
         try {
             List<ColorCountRes> colors = productService.readProductColor(name);
             // 성공 시: ResponseEntity에 List를 담아 200 OK 상태로 반환
@@ -92,7 +92,7 @@ public class ProductController {
     }
 
     @GetMapping("/getPrd/{name}/{color}")
-    public ResponseEntity<?> getProduct(@RequestParam String name, @RequestParam String color){
+    public ResponseEntity<?> getProduct(@PathVariable String name, @PathVariable String color){
         try {
             Product product = productService.readProduct(name,color);
             // 성공 시: ResponseEntity에 Product를 담아 200 OK 상태로 반환
